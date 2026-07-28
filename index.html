@@ -1,189 +1,718 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Join Deepak Wadhwa's Telegram channel for daily intraday calls, Nifty & BankNifty analysis, and live market updates.">
 <title>Deepak Office</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+:root {
+  --bg-deep: #060606;
+  --bg-card: #0e0e0e;
+  --bg-card-light: #141414;
+  --gold: #ffd700;
+  --gold-dim: #b8960f;
+  --gold-glow: rgba(255, 215, 0, 0.3);
+  --green: #00ff88;
+  --green-bg: rgba(0, 255, 136, 0.08);
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #707070;
+  --border-subtle: rgba(255,255,255,0.06);
+  --border-gold: rgba(255,215,0,0.25);
 }
 
-body{
-background:#000;
-color:#fff;
-overflow-x:hidden;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-/* HERO */
-
-.hero{
-min-height:100vh;
-padding:30px 20px;
-background:
-linear-gradient(
-180deg,
-#0a0a0a,
-#121212,
-#000
-);
-text-align:center;
-position:relative;
+body {
+  min-height: 100vh;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
 }
 
-.hero::before{
-content:'';
-position:absolute;
-width:300px;
-height:300px;
-background:#ffd70030;
-border-radius:50%;
-filter:blur(120px);
-top:-120px;
-left:50%;
-transform:translateX(-50%);
+/* ===== BG EFFECTS ===== */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-/* PROFILE */
-
-.profile{
-width:120px;
-height:120px;
-border-radius:50%;
-overflow:hidden;
-margin:20px auto;
-border:4px solid #ffd700;
-box-shadow:0 0 25px #ffd700;
+.bg-layer .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: orbFloat 14s ease-in-out infinite alternate;
 }
 
-.profile img{
-width:100%;
-height:100%;
-object-fit:cover;
+.bg-layer .orb:nth-child(1) {
+  width: 280px; height: 280px;
+  background: rgba(255,215,0,0.12);
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
 }
 
-/* TEXT */
-
-h1{
-font-size:34px;
-font-weight:800;
-margin-top:15px;
+.bg-layer .orb:nth-child(2) {
+  width: 200px; height: 200px;
+  background: rgba(0,255,136,0.06);
+  bottom: 10%; right: -60px;
+  animation-delay: -5s;
+  animation-duration: 18s;
 }
 
-.subtitle{
-color:#ccc;
-margin-top:8px;
-font-size:15px;
+.bg-layer .orb:nth-child(3) {
+  width: 160px; height: 160px;
+  background: rgba(255,215,0,0.06);
+  bottom: 30%; left: -40px;
+  animation-delay: -9s;
+  animation-duration: 20s;
 }
 
-/* LIVE BADGE */
-
-.badge{
-display:inline-block;
-padding:8px 15px;
-background:#00ff8830;
-color:#00ff88;
-border-radius:30px;
-font-size:13px;
-font-weight:700;
-margin-top:10px;
+@keyframes orbFloat {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(20px, -15px) scale(1.08); }
+  100% { transform: translate(-15px, 20px) scale(0.95); }
 }
 
-/* STATS */
-
-.stats{
-display:flex;
-justify-content:space-between;
-margin-top:35px;
-gap:10px;
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.stat{
-flex:1;
-background:#111;
-padding:15px;
-border-radius:18px;
+/* ===== MAIN CARD ===== */
+.wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 430px;
+  margin: 20px auto;
+  background: linear-gradient(180deg, var(--bg-card-light), var(--bg-card));
+  border-radius: 28px;
+  padding: 32px 22px 28px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.7),
+    0 0 0 1px var(--border-subtle),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  text-align: center;
+  animation: cardEntry 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.stat h2{
-color:#ffd700;
-font-size:24px;
+@keyframes cardEntry {
+  from { opacity: 0; transform: translateY(35px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.stat span{
-font-size:12px;
-color:#aaa;
+/* ===== BADGE ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--green-bg);
+  border: 1px solid rgba(0,255,136,0.15);
+  color: var(--green);
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-/* CTA */
-
-.join-btn{
-display:block;
-margin-top:30px;
-padding:18px;
-border-radius:18px;
-text-decoration:none;
-font-weight:800;
-font-size:17px;
-background:#ffd700;
-color:#000;
-box-shadow:0 0 25px #ffd700;
-animation:pulse 1.5s infinite;
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: dotBlink 1.5s ease-in-out infinite;
 }
 
-@keyframes pulse{
-50%{
-transform:scale(1.04);
-}
-}
-
-/* FEATURES */
-
-.features{
-margin-top:35px;
-text-align:left;
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
 }
 
-.feature{
-background:#111;
-padding:16px;
-border-radius:15px;
-margin-bottom:12px;
-font-size:14px;
+/* ===== PROFILE ===== */
+.profile-wrap {
+  position: relative;
+  display: inline-block;
+  margin-top: 18px;
 }
 
-/* TRUST BOX */
-
-.trust{
-margin-top:25px;
-background:#111;
-padding:18px;
-border-radius:18px;
+.profile-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--gold);
+  border-right-color: rgba(255,215,0,0.4);
+  animation: ringSpin 3s linear infinite;
 }
 
-.trust h3{
-color:#ffd700;
-margin-bottom:10px;
+.profile-ring-inner {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  border-bottom-color: rgba(255,215,0,0.2);
+  border-left-color: rgba(255,215,0,0.1);
+  animation: ringSpin 5s linear infinite reverse;
 }
 
-.footer-links{
-  margin-top:18px;
-  font-size:13px;
-  line-height:1.7;
+@keyframes ringSpin {
+  to { transform: rotate(360deg); }
 }
 
-.footer-links a{
-  color:#0a84ff;
-  text-decoration:none;
-  font-weight:600;
+.profile {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  position: relative;
+  z-index: 2;
+}
+
+.profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #111;
+  display: block;
+}
+
+/* ===== TEXT ===== */
+h1 {
+  margin-top: 16px;
+  font-size: 25px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* ===== CTA - Compact ===== */
+.cta-main {
+  margin-top: 18px;
+}
+
+.cta-main a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), #ffe14d);
+  color: #000;
+  text-decoration: none;
+  box-shadow: 0 4px 18px var(--gold-glow);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  animation: ctaPulse 2.2s ease-in-out infinite;
+}
+
+.cta-main a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+
+.cta-main a:hover::after {
+  transform: translateX(100%);
+}
+
+.cta-main a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(255,215,0,0.45);
+}
+
+.cta-main a:active {
+  transform: scale(0.97);
+}
+
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 18px var(--gold-glow); }
+  50%      { box-shadow: 0 4px 30px rgba(255,215,0,0.5), 0 0 0 5px rgba(255,215,0,0.06); }
+}
+
+.cta-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/* ===== TIMER ===== */
+.timer-box {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(255,215,0,0.05);
+  border: 1px dashed rgba(255,215,0,0.2);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.03), transparent);
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50%      { transform: translateX(100%); }
+}
+
+.timer-text {
+  font-size: 11px;
+  color: rgba(255,215,0,0.7);
+  position: relative;
+  z-index: 1;
+}
+
+.timer-count {
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+  display: inline-block;
+  min-width: 16px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.timer-count.tick {
+  transform: scale(1.3);
+}
+
+.timer-progress {
+  margin-top: 7px;
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.timer-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  border-radius: 3px;
+  transition: width 1s linear;
+  box-shadow: 0 0 6px var(--gold-glow);
+}
+
+/* ===== STATS ===== */
+.stats {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.stat {
+  flex: 1;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border-subtle);
+  padding: 12px 8px;
+  border-radius: 14px;
+  transition: background 0.3s ease;
+}
+
+.stat:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+.stat h2 {
+  color: var(--gold);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat span {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ===== FEATURES ===== */
+.features {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.feature {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border-subtle);
+  padding: 11px 14px;
+  border-radius: 11px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transition: background 0.2s ease;
+}
+
+.feature:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+.feature-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(255,215,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+/* ===== SECONDARY ROW ===== */
+.cta-row {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.cta-secondary {
+  flex: 1;
+}
+
+.cta-secondary a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 9px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--gold);
+  text-decoration: none;
+  border: 1.5px solid var(--border-gold);
+  transition: all 0.25s ease;
+}
+
+.cta-secondary a:hover {
+  background: rgba(255,215,0,0.06);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.copy-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 9px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.copy-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-secondary);
+}
+
+.copy-btn.copied {
+  background: rgba(255,215,0,0.08);
+  border-color: var(--border-gold);
+  color: var(--gold);
+}
+
+/* ===== TRUST ===== */
+.trust-box {
+  margin-top: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.trust-box h3 {
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.trust-box p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ===== TRUST DOTS ===== */
+.trust-dots-row {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.trust-dots {
+  display: flex;
+  gap: 3px;
+}
+
+.trust-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.5;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.trust-dot:nth-child(2) { animation-delay: 0.2s; }
+.trust-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50%      { opacity: 1; transform: scale(1.1); }
+}
+
+/* ===== FOOTER ===== */
+.footer-links {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.footer-links a {
+  color: #0a84ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.footer-links a:hover {
+  opacity: 0.8;
+}
+
+.footer-links .ad-link {
+  color: var(--gold-dim);
+}
+
+/* ===== REDIRECT OVERLAY ===== */
+.redirect-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.redirect-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.redirect-card {
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+  animation: overlayPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes overlayPop {
+  from { opacity: 0; transform: translateY(25px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.redirect-card .r-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #ffe14d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 6px 24px var(--gold-glow);
+}
+
+.redirect-card .r-icon svg {
+  width: 24px;
+  height: 24px;
+  color: #000;
+}
+
+.redirect-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.redirect-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.redirect-card .ov-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), #ffe14d);
+  color: #000;
+  text-decoration: none;
+  box-shadow: 0 6px 24px var(--gold-glow);
+  transition: all 0.25s ease;
+  animation: ctaPulse 2.2s ease-in-out infinite;
+}
+
+.redirect-card .ov-cta:hover {
+  transform: translateY(-2px);
+}
+
+.redirect-card .ov-cta:active {
+  transform: scale(0.97);
+}
+
+.redirect-card .ov-tg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--gold);
+  text-decoration: none;
+  border: 1.5px solid var(--border-gold);
+  transition: all 0.25s ease;
+}
+
+.redirect-card .ov-tg:hover {
+  background: rgba(255,215,0,0.06);
+  border-color: var(--gold);
+}
+
+.redirect-card .ov-copy {
+  margin-top: 12px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.redirect-card .ov-copy:hover {
+  background: rgba(255,255,255,0.07);
+  color: var(--text-secondary);
+}
+
+.redirect-card .ov-copy.copied {
+  background: rgba(255,215,0,0.08);
+  border-color: var(--border-gold);
+  color: var(--gold);
+}
+
+.redirect-card .ov-hint {
+  margin-top: 14px;
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  line-height: 1.6;
+}
+
+@media (max-width: 460px) {
+  .wrapper {
+    margin: 12px;
+    padding: 26px 16px 22px;
+    border-radius: 22px;
+  }
+  h1 { font-size: 22px; }
+  .cta-row { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 </style>
@@ -207,100 +736,276 @@ src="https://www.facebook.com/tr?id=1552899889647843&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 </head>
+
 <body>
 
-<section class="hero">
-
-<div class="badge">
-🟢 LIVE MARKET UPDATES
+<div class="bg-layer" aria-hidden="true">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
 </div>
 
-<div class="profile">
-<img src="Deepak.jpg">
-</div>
+<canvas id="particles" aria-hidden="true"></canvas>
 
-<h1>Deepak Wadhwa</h1>
+<div class="wrapper">
 
-<p class="subtitle">
-India's Trusted Stock Market Analyst
-</p>
-
-<div class="stats">
-
-<div class="stat">
-<h2>6+</h2>
-<span>Years Exp.</span>
-</div>
-
-<div class="stat">
-<h2>95%</h2>
-<span>Accuracy</span>
-</div>
-
-<div class="stat">
-<h2>10K+</h2>
-<span>Members</span>
-</div>
-
-</div>
-
-<a href="https://t.me/+Gohn5FwLFvgyZmRl" class="join-btn">
-🚀 JOIN TELEGRAM CHANNEL
-</a>
-
-<div class="features">
-
-<div class="feature">
-✅ Daily Intraday Calls
-</div>
-
-<div class="feature">
-📈 Nifty & BankNifty Analysis
-</div>
-
-<div class="feature">
-🔥 Live Market Updates
-</div>
-
-<div class="feature">
-💰 High Accuracy Setups
-</div>
-
-</div>
-
-<div class="trust">
-<h3>Why Join?</h3>
-<p>
-Get daily trading opportunities, market analysis,
-and educational content directly on Telegram.
-</p>
-</div>
-
-
- <div class="footer-links">
-
-    Ads Maintained By  
-    <a href="https://t.me/+ifc6dyg-xiA2ZGE1" target="_blank">
-      Digital Ads Expert
-    </a>
-
-    <br><br>
-
-    <a href="https://privacypolicy2.pages.dev" target="_blank">
-      Privacy Policy
-    </a> •
-    <a href="https://disclaimer2.pages.dev/" target="_blank">
-      Disclaimer
-    </a> •
-    <a href="https://terms2.pages.dev/" target="_blank">
-      Terms
-    </a>
-
+  <!-- Live Badge -->
+  <div class="badge">
+    <span class="badge-dot"></span>
+    LIVE MARKET UPDATES
   </div>
 
+  <!-- Profile -->
+  <div class="profile-wrap">
+    <div class="profile-ring"></div>
+    <div class="profile-ring-inner"></div>
+    <div class="profile">
+      <!-- Yahan apni image ka FULL URL daalo, local path kaam nahi karega -->
+      <img src="Deepak.jpg" alt="Deepak Wadhwa"
+           onerror="this.style.background='linear-gradient(135deg,#1a1a1a,#222)';this.alt='DW'">
+    </div>
+  </div>
 
-</section>
+  <h1>Deepak Wadhwa</h1>
+  <p class="subtitle">India's Trusted Stock Market Analyst</p>
+
+  <!-- Main CTA + Subscribe event -->
+  <div class="cta-main">
+    <a href="https://t.me/+Gohn5FwLFvgyZmRl" target="_blank" rel="noopener" onclick="trackSubscribe()">
+      <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.855.075 1.644.418 1.955.34.31.7.534 1.01.71l.022.012 4.52 2.576c.379.716.848 1.602 1.19 2.246.207.378.373.677.483.87l.064.112.018.032c.21.37.486.672.85.863.366.192.737.21 1.066.132a1.96 1.96 0 0 0 .653-.295l.005-.004 2.38-1.923 3.024 2.633.018.015a2.08 2.08 0 0 0 1.536.438c.57-.066 1.015-.37 1.288-.695.27-.322.397-.67.456-.903l.003-.014 2.965-13.174c.141-.627.055-1.167-.19-1.574-.243-.404-.63-.637-1.002-.747a2.07 2.07 0 0 0-.562-.074z"/><path d="M14.5 14.5l-2 4" stroke-width="1.5"/></svg>
+      Join Free Telegram Channel
+    </a>
+  </div>
+
+  <!-- Timer -->
+  <div class="timer-box">
+    <div class="timer-text">
+      Auto redirecting in <span id="countdown" class="timer-count">15</span> seconds
+    </div>
+    <div class="timer-progress">
+      <div class="timer-progress-bar" id="progressBar" style="width: 100%"></div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <h2>6+</h2>
+      <span>Years Exp.</span>
+    </div>
+    <div class="stat">
+      <h2>95%</h2>
+      <span>Accuracy</span>
+    </div>
+    <div class="stat">
+      <h2>10K+</h2>
+      <span>Members</span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feature">
+      <span class="feature-icon">✅</span>
+      Daily Intraday Calls
+    </div>
+    <div class="feature">
+      <span class="feature-icon">📈</span>
+      Nifty & BankNifty Analysis
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🔥</span>
+      Live Market Updates
+    </div>
+    <div class="feature">
+      <span class="feature-icon">💰</span>
+      High Accuracy Setups
+    </div>
+  </div>
+
+  <!-- Secondary row + Subscribe event -->
+  <div class="cta-row">
+    <div class="cta-secondary">
+      <a href="tg://join?invite=Gohn5FwLFvgyZmRl" onclick="trackSubscribe()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Open App
+      </a>
+    </div>
+    <button class="copy-btn" id="copyBtn" onclick="copyLink()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy Link
+    </button>
+  </div>
+
+  <!-- Trust -->
+  <div class="trust-box">
+    <h3>Why Join?</h3>
+    <p>Get daily trading opportunities, market analysis, and educational content directly on Telegram.</p>
+  </div>
+
+  <div class="trust-dots-row">
+    <span class="trust-dots">
+      <span class="trust-dot"></span>
+      <span class="trust-dot"></span>
+      <span class="trust-dot"></span>
+    </span>
+    Trusted by traders across India
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-links">
+    Ads Maintained By
+    <a href="https://t.me/+ifc6dyg-xiA2ZGE1" target="_blank" rel="noopener" class="ad-link">Digital Ads Expert</a>
+    <br><br>
+    <a href="https://privacypolicy2.pages.dev" target="_blank" rel="noopener">Privacy Policy</a> &bull;
+    <a href="https://disclaimer2.pages.dev/" target="_blank" rel="noopener">Disclaimer</a> &bull;
+    <a href="https://terms2.pages.dev/" target="_blank" rel="noopener">Terms</a>
+  </div>
+
+</div>
+
+<!-- Overlay -->
+<div class="redirect-overlay" id="redirectOverlay">
+  <div class="redirect-card">
+    <div class="r-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.855.075 1.644.418 1.955.34.31.7.534 1.01.71l.022.012 4.52 2.576c.379.716.848 1.602 1.19 2.246.207.378.373.677.483.87l.064.112.018.032c.21.37.486.672.85.863.366.192.737.21 1.066.132a1.96 1.96 0 0 0 .653-.295l.005-.004 2.38-1.923 3.024 2.633.018.015a2.08 2.08 0 0 0 1.536.438c.57-.066 1.015-.37 1.288-.695.27-.322.397-.67.456-.903l.003-.014 2.965-13.174c.141-.627.055-1.167-.19-1.574-.243-.404-.63-.637-1.002-.747a2.07 2.07 0 0 0-.562-.074z"/><path d="M14.5 14.5l-2 4" stroke-width="1.5"/></svg>
+    </div>
+    <h2>You're Almost There!</h2>
+    <p>Tap below to join Deepak Wadhwa's free Telegram channel.</p>
+    <a href="https://t.me/+Gohn5FwLFvgyZmRl" target="_blank" rel="noopener" class="ov-cta" onclick="trackSubscribe()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      Tap to Join Channel
+    </a>
+    <a href="tg://join?invite=Gohn5FwLFvgyZmRl" class="ov-tg" onclick="trackSubscribe()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Open in Telegram App
+    </a>
+    <button class="ov-copy" id="overlayCopyBtn" onclick="copyLinkOverlay()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy Link & Open Manually
+    </button>
+    <div class="ov-hint">If nothing happens, copy the link and paste it in your browser or Telegram app</div>
+  </div>
+</div>
+
+<script>
+var TG_WEB = "https://t.me/+Gohn5FwLFvgyZmRl";
+var TG_APP = "tg://join?invite=Gohn5FwLFvgyZmRl";
+var attempted = false;
+
+/* ===== Pixel Events ===== */
+function trackSubscribe() {
+  if (typeof fbq === "function") fbq("track", "Subscribe");
+}
+
+function trackLead() {
+  if (typeof fbq === "function") fbq("track", "Lead");
+}
+
+/* ===== Copy ===== */
+function copyLink() { doCopy(TG_WEB, document.getElementById("copyBtn")); }
+function copyLinkOverlay() { doCopy(TG_WEB, document.getElementById("overlayCopyBtn")); }
+
+function doCopy(text, btn) {
+  var done = function() {
+    var o = btn.innerHTML;
+    btn.classList.add("copied");
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    setTimeout(function() { btn.innerHTML = o; btn.classList.remove("copied"); }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function() { fbCopy(text, btn, done); });
+  } else {
+    fbCopy(text, btn, done);
+  }
+}
+
+function fbCopy(text, btn, done) {
+  var t = document.createElement("textarea");
+  t.value = text;
+  t.style.cssText = "position:fixed;left:-9999px";
+  document.body.appendChild(t);
+  t.select();
+  try { document.execCommand("copy"); done(); } catch(e) { btn.textContent = "Failed"; }
+  document.body.removeChild(t);
+}
+
+/* ===== Timer + Redirect ===== */
+(function() {
+  var TOTAL = 15, s = TOTAL;
+  var cd = document.getElementById("countdown");
+  var pb = document.getElementById("progressBar");
+  var ov = document.getElementById("redirectOverlay");
+
+  var t = setInterval(function() {
+    s--;
+    if (cd) { cd.textContent = s; cd.classList.add("tick"); setTimeout(function() { cd.classList.remove("tick"); }, 300); }
+    if (pb) pb.style.width = Math.max(0, (s / TOTAL) * 100) + "%";
+    if (s <= 0) { clearInterval(t); trackLead(); doRedirect(ov); }
+  }, 1000);
+})();
+
+function doRedirect(ov) {
+  if (attempted) return;
+  attempted = true;
+
+  /* Try tg:// via iframe */
+  var f = document.createElement("iframe");
+  f.style.display = "none";
+  f.src = TG_APP;
+  document.body.appendChild(f);
+
+  /* Try window.location */
+  setTimeout(function() { window.location.href = TG_WEB; }, 300);
+
+  /* Fallback: overlay with tap button */
+  setTimeout(function() {
+    if (f.parentNode) f.parentNode.removeChild(f);
+    if (ov) ov.classList.add("active");
+  }, 2000);
+}
+
+/* ===== Particles ===== */
+(function() {
+  var c = document.getElementById("particles");
+  var ctx = c.getContext("2d");
+  var pts = [];
+  function resize() { c.width = innerWidth; c.height = innerHeight; }
+  resize();
+  addEventListener("resize", resize);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  function P() { this.r(); }
+  P.prototype.r = function() {
+    this.x = Math.random() * c.width;
+    this.y = Math.random() * c.height;
+    this.s = Math.random() * 1.5 + 0.4;
+    this.dx = (Math.random() - 0.5) * 0.25;
+    this.dy = (Math.random() - 0.5) * 0.25;
+    this.o = Math.random() * 0.25 + 0.04;
+    this.p = Math.random() * 6.28;
+    this.ps = Math.random() * 0.015 + 0.005;
+  };
+  P.prototype.u = function() {
+    this.x += this.dx; this.y += this.dy; this.p += this.ps;
+    if (this.x < -10 || this.x > c.width + 10 || this.y < -10 || this.y > c.height + 10) this.r();
+  };
+  P.prototype.d = function() {
+    var a = this.o * (0.5 + 0.5 * Math.sin(this.p));
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, Math.max(0.1, this.s), 0, 6.28);
+    ctx.fillStyle = "rgba(255,215,0," + a + ")";
+    ctx.fill();
+  };
+
+  for (var i = 0; i < 30; i++) pts.push(new P());
+  (function loop() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < pts.length; i++) { pts[i].u(); pts[i].d(); }
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
 
 </body>
 </html>
-
