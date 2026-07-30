@@ -930,12 +930,6 @@ function fbCopy(text, btn, done) {
   document.body.removeChild(t);
 }
 
-/* ===== Timer + Redirect ===== */
-(function() {
-  var TOTAL = 15, s = TOTAL;
-  var cd = document.getElementById("countdown");
-  var pb = document.getElementById("progressBar");
-  var ov = document.getElementById("redirectOverlay");
 
   var t = setInterval(function() {
     s--;
